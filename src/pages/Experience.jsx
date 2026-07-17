@@ -72,7 +72,7 @@ export default function Experience({ onNavigateToNextSection }) {
   );
 
   return (
-    <div className="relative w-full bg-night">
+    <div className="relative w-full ">
       <BackgroundParticles />
       <ProgressTrail total={TOTAL_SCREENS} current={currentScreen} />
 

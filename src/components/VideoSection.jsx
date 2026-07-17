@@ -20,7 +20,7 @@ export default function VideoSection({
         {!videoLoaded ? (
           <GlassPanel className="flex aspect-video w-full flex-col items-center justify-center gap-6 p-8">
             <p className="text-balance font-body text-mist/70">
-              Escuchá, en sus propias palabras, cómo Dios transformó su vida.
+              Escuchá, cómo Dios transformó su vida.
             </p>
 
             <ButtonPrimary
@@ -28,7 +28,7 @@ export default function VideoSection({
               onClick={() => setVideoLoaded(true)}
               aria-label={`Reproducir: ${title}`}
             >
-              Escuchar su testimonio
+              Escuchar
             </ButtonPrimary>
           </GlassPanel>
         ) : (

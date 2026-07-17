@@ -3,8 +3,6 @@ import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import { useReducedMotion } from "../hooks/useReducedMotion";
 
-// Fondo vivo y sutil: pocas partículas, movimiento muy lento, líneas tenues.
-// Se inicializa una sola vez y queda fijo detrás de todo el contenido.
 export default function BackgroundParticles() {
   const [ready, setReady] = useState(false);
   const prefersReducedMotion = useReducedMotion();
@@ -23,30 +21,51 @@ export default function BackgroundParticles() {
       detectRetina: true,
       particles: {
         number: {
-          value: prefersReducedMotion ? 0 : 36,
+          value: prefersReducedMotion ? 0 : 40, // ← menos partículas
           density: { enable: true, area: 900 },
         },
-        color: { value: ["#3B82F6", "#8B5CF6", "#38BDF8"] },
-        opacity: { value: { min: 0.15, max: 0.45 } },
-        size: { value: { min: 1, max: 2.4 } },
+        color: {
+          value: ["#4F46E5", "#7C3AED", "#3B82F6", "#06B6D4"], // menos colores
+        },
+        opacity: {
+          value: { min: 0.2, max: 0.6 },
+          animation: {
+            enable: true, // ← mantenemos animación suave
+            speed: 0.3, // ← más lenta para menos carga
+            minimumValue: 0.15,
+            sync: false,
+          },
+        },
+        size: {
+          value: { min: 1.5, max: 3.5 },
+          // Eliminamos la animación de tamaño (ahorra CPU)
+        },
         links: {
           enable: true,
-          distance: 140,
-          color: "#3B82F6",
-          opacity: 0.08,
+          distance: 150,
+          color: "#8B5CF6",
+          opacity: 0.12,
           width: 1,
         },
         move: {
           enable: true,
-          speed: 0.35,
+          speed: prefersReducedMotion ? 0.2 : 0.5,
           direction: "none",
           random: true,
           straight: false,
           outModes: { default: "out" },
+          drift: 0.05, // ← menos deriva
         },
+        // Eliminamos twinkle y shadow (son los más pesados)
+        shape: { type: "circle" },
       },
       interactivity: {
-        events: { onHover: { enable: false }, onClick: { enable: false } },
+        events: {
+          onHover: {
+            enable: false, // ← desactivamos interactividad para ahorrar
+          },
+          onClick: { enable: false },
+        },
       },
     }),
     [prefersReducedMotion]
