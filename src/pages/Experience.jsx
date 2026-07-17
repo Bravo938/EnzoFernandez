@@ -73,7 +73,7 @@ export default function Experience({ onNavigateToNextSection }) {
 
   return (
     <div className="relative w-full ">
-      <BackgroundParticles />
+      <BackgroundParticles key="bg-particles"/>
       <ProgressTrail total={TOTAL_SCREENS} current={currentScreen} />
 
       <div ref={registerRef(idx.q1)}>

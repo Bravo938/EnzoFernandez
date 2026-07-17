@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import { useReducedMotion } from "../hooks/useReducedMotion";
@@ -18,27 +18,27 @@ export default function BackgroundParticles() {
       fullScreen: { enable: false },
       background: { color: { value: "transparent" } },
       fpsLimit: 60,
-      detectRetina: true,
+      detectRetina: false, // ← evitamos recálculos de resolución
+      pauseOnBlur: false, // ← que no se detenga al cambiar de pestaña o scroll
       particles: {
         number: {
-          value: prefersReducedMotion ? 0 : 40, // ← menos partículas
-          density: { enable: true, area: 900 },
+          value: prefersReducedMotion ? 0 : 40,
+          density: { enable: false }, // ← desactivamos densidad variable
         },
         color: {
-          value: ["#4F46E5", "#7C3AED", "#3B82F6", "#06B6D4"], // menos colores
+          value: ["#4F46E5", "#7C3AED", "#3B82F6", "#06B6D4"],
         },
         opacity: {
           value: { min: 0.2, max: 0.6 },
           animation: {
-            enable: true, // ← mantenemos animación suave
-            speed: 0.3, // ← más lenta para menos carga
+            enable: true,
+            speed: 0.3,
             minimumValue: 0.15,
             sync: false,
           },
         },
         size: {
           value: { min: 1.5, max: 3.5 },
-          // Eliminamos la animación de tamaño (ahorra CPU)
         },
         links: {
           enable: true,
@@ -54,17 +54,15 @@ export default function BackgroundParticles() {
           random: true,
           straight: false,
           outModes: { default: "out" },
-          drift: 0.05, // ← menos deriva
+          drift: 0.05,
         },
-        // Eliminamos twinkle y shadow (son los más pesados)
         shape: { type: "circle" },
       },
       interactivity: {
         events: {
-          onHover: {
-            enable: false, // ← desactivamos interactividad para ahorrar
-          },
+          onHover: { enable: false },
           onClick: { enable: false },
+          resize: false, // ← ¡clave! evita reinicios por redimensionado
         },
       },
     }),
